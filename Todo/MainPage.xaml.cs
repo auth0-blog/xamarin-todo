@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Todo.Models;
 using Xamarin.Forms;
 
 namespace Todo
@@ -12,6 +13,8 @@ namespace Todo
         public MainPage()
         {
             InitializeComponent();
+
+            this.BindingContext = new TasksViewModel();
         }
     }
 }

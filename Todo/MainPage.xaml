@@ -1,17 +1,67 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Todo"
-    x:Class="Todo.MainPage">
-
+    xmlns:converters="clr-namespace:Todo.Converters"
+    x:Class="Todo.MainPage"
+    x:Name="root"
+    Title="My Tasks">
+    <ContentPage.Resources>
+        <Color
+            x:Key="Fade">#C9C9C9</Color>
+        <Color
+            x:Key="TextColor">#656363</Color>
+        <Style
+            x:Key="HeaderStyle"
+            TargetType="Label">
+            <Setter
+                Property="FontSize"
+                Value="60" />
+            <Setter
+                Property="TextColor"
+                Value="{StaticResource Fade}" />
+            <Setter
+                Property="Margin"
+                Value="16" />
+        </Style>
+        <ResourceDictionary>
+            <converters:BoolToStrikeThrough
+                x:Key="StrikeThroughConverter" />
+            <converters:TodoItemStatusColor
+                x:Key="StatusToColor" />
+            <converters:BoolToDoneText
+                x:Key="StatusToActionText" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Name="Add" />
+    </ContentPage.ToolbarItems>
     <StackLayout>
-        <!-- Place new controls here -->
-
-        <Label
-            Text="Welcome to Xamarin.Forms!"
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand" />
+        <ListView
+            ItemsSource="{Binding Todos}"
+            SeparatorVisibility="None"
+            RowHeight="50">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label
+                            Text="{Binding Title}"
+                            TextColor="{Binding IsDone, Converter={StaticResource StatusToColor}}"
+                            Margin="16">
+                        </Label>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Text="{Binding IsDone, Converter={StaticResource StatusToActionText}}"
+                                Command="{Binding Path=BindingContext.TapCommand, Source={x:Reference root}}" CommandParameter="{Binding .}" />
+                            <MenuItem
+                                Text="Delete"
+                                IsDestructive="true" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>
