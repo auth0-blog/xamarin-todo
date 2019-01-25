@@ -1,4 +1,5 @@
 ﻿using System;
+using Todo.Repositories;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,8 @@ namespace Todo
         public App()
         {
             InitializeComponent();
+
+            Current.Resources["Data"] = new TodoDataRepository();
 
             MainPage = new NavigationPage(new MainPage());
         }

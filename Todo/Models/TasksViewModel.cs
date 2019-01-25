@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
+using Todo.Repositories;
 using Xamarin.Forms;
 
 namespace Todo.Models
@@ -22,11 +23,7 @@ namespace Todo.Models
 
         public TasksViewModel()
         {
-            this.Todos = new ObservableCollection<TodoItem>
-            {
-                new TodoItem { Title = "Feed the cats" },
-                new TodoItem { Title = "Wash the car", IsDone = true }
-            };
+            this.Todos = (Application.Current.Resources["Data"] as TodoDataRepository).Items;
         }
     }
 }

@@ -26,8 +26,6 @@
                 Value="16" />
         </Style>
         <ResourceDictionary>
-            <converters:BoolToStrikeThrough
-                x:Key="StrikeThroughConverter" />
             <converters:TodoItemStatusColor
                 x:Key="StatusToColor" />
             <converters:BoolToDoneText
@@ -36,7 +34,7 @@
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem
-            Name="Add" />
+            Name="Add" Clicked="AddMenuItem_Clicked" />
     </ContentPage.ToolbarItems>
     <StackLayout>
         <ListView

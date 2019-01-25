@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Todo.AddItemPage"
+    Title="Add Todo">
+    <ContentPage.Content>
+        <StackLayout
+            VerticalOptions="Center"
+            Margin="16">
+            <Entry
+                x:Name="ItemEntry"
+                Placeholder="What do you want to achieve today?"
+                Text="{Binding TodoText}"
+                ReturnCommand="{Binding AddCommand}"
+            />
+            <Button
+                x:Name="AddButton"
+                Text="Create"
+                VerticalOptions="End"
+                Command="{Binding AddCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
