@@ -16,13 +16,16 @@ namespace Todo
             InitializeComponent();
 
             this.BindingContext = new TasksViewModel();
-
-            Debug.WriteLine("Initializing main page");
         }
 
-        async void AddMenuItem_Clicked(object sender, System.EventArgs e)
+        async void AddMenuItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddItemPage());
+        }
+        
+        void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ((TasksViewModel)this.BindingContext).TapCommand.Execute(e.Item);
         }
     }
 }

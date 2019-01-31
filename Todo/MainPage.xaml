@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Todo"
     xmlns:converters="clr-namespace:Todo.Converters"
+    xmlns:controls="clr-namespace:Todo.CustomControls"
     x:Class="Todo.MainPage"
     x:Name="root"
     Title="My Tasks">
@@ -40,24 +41,22 @@
         <ListView
             ItemsSource="{Binding Todos}"
             SeparatorVisibility="None"
+            ItemTapped="Handle_ItemTapped"
+            SelectionMode="None"
             RowHeight="50">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <Label
-                            Text="{Binding Title}"
-                            TextColor="{Binding IsDone, Converter={StaticResource StatusToColor}}"
-                            Margin="16">
-                        </Label>
-                        <ViewCell.ContextActions>
-                            <MenuItem
-                                Text="{Binding IsDone, Converter={StaticResource StatusToActionText}}"
-                                Command="{Binding Path=BindingContext.TapCommand, Source={x:Reference root}}" CommandParameter="{Binding .}" />
-                            <MenuItem
+                    <controls:TodoCell
+                        Text="{Binding Title}"
+                        TextColor="{Binding IsDone, Converter={StaticResource StatusToColor}}"
+                        IsChecked="{Binding IsDone}">
+                       
+                        <controls:TodoCell.ContextActions>
+                          <MenuItem
                                 Text="Delete"
                                 IsDestructive="true" />
-                        </ViewCell.ContextActions>
-                    </ViewCell>
+                        </controls:TodoCell.ContextActions>
+                    </controls:TodoCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
