@@ -54,7 +54,10 @@
                         <controls:TodoCell.ContextActions>
                           <MenuItem
                                 Text="Delete"
-                                IsDestructive="true" />
+                                IsDestructive="true"
+                                Command="{Binding BindingContext.DeleteCommand, Source={x:Reference root}}"
+                                CommandParameter="{Binding .}"
+                            />
                         </controls:TodoCell.ContextActions>
                     </controls:TodoCell>
                 </DataTemplate>

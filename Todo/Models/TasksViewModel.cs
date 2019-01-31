@@ -19,6 +19,14 @@ namespace Todo.Models
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new Command<TodoItem>(item => this.Todos.Remove(item));
+            }
+        }
+
         public ObservableCollection<TodoItem> Todos { get; set; }
 
         public TasksViewModel()
