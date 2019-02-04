@@ -42,6 +42,9 @@
             ItemsSource="{Binding Todos}"
             SeparatorVisibility="None"
             ItemTapped="Handle_ItemTapped"
+            IsPullToRefreshEnabled="true"
+            RefreshCommand="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}"
             SelectionMode="None"
             RowHeight="50">
             <ListView.ItemTemplate>

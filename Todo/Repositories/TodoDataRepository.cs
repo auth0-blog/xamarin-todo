@@ -1,22 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Todo.Models;
-using Xamarin.Forms;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Todo.Repositories
 {
+    /// <summary>
+    /// A data repository that marshals Todo items between the app and the API
+    /// </summary>
     public class TodoDataRepository
     {
-        public ObservableCollection<TodoItem> Items { get; set; }
+        const string API_URL = "http://localhost:3001/api/todo";
 
-        public TodoDataRepository()
+        /// <summary>
+        /// Loads data from an external API
+        /// </summary>
+        public async Task<List<TodoItem>> LoadData()
         {
-            this.Items = new ObservableCollection<TodoItem>
-            {
-                new TodoItem { Title = "Feed the cats" },
-                new TodoItem { Title = "Wash the car", IsDone = true }
-            };
+            var client = new HttpClient();
+            var json = await client.GetStringAsync(API_URL);
+
+            var models = JsonConvert.DeserializeObject<List<TodoItem>>(json);
+
+            return models.OrderBy(i => i.IsDone).ToList();
         }
     }
 }

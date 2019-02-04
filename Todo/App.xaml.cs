@@ -8,18 +8,17 @@ namespace Todo
 {
     public partial class App : Application
     {
+        private readonly TodoDataRepository dataRepository;
+
         public App()
         {
             InitializeComponent();
-
-            Current.Resources["Data"] = new TodoDataRepository();
 
             MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()
-        {
-            // Handle when your app starts
+        { 
         }
 
         protected override void OnSleep()

@@ -7,6 +7,8 @@ namespace Todo.Models
     {
         bool isDone = false;
 
+        public int Id { get; set; }
+
         public string Title { get; set; }
 
         public bool IsDone
