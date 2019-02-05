@@ -19,7 +19,8 @@
                 x:Name="AddButton"
                 Text="Create"
                 VerticalOptions="End"
-                Command="{Binding AddCommand}" />
+                Command="{Binding AddCommand}"
+                CommandParameter="{Binding TodoText}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

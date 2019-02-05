@@ -19,11 +19,11 @@ namespace Todo.Models
         {
             get
             {
-                return new Command(() =>
+                return new Command<string>(async text =>
                 {
-                    if (!string.IsNullOrWhiteSpace(this.TodoText))
+                    if (!string.IsNullOrWhiteSpace(text))
                     {
-                        //appRepository.Items.Add(new TodoItem { Title = this.TodoText });
+                        await dataRepository.AddItem(text);
                         ItemAdded?.Invoke(this, new EventArgs());
                     }
                 });

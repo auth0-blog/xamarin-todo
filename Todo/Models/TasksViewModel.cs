@@ -20,7 +20,11 @@ namespace Todo.Models
         {
             get
             {
-                return new Command<TodoItem>(item => item.IsDone = !item.IsDone);
+                return new Command<TodoItem>(async item =>
+                {
+                    item.IsDone = !item.IsDone;
+                    await UpdateDoneStatus(item);
+                });
             }
         }
 
@@ -28,7 +32,9 @@ namespace Todo.Models
         {
             get
             {
-                return new Command<TodoItem>(item => this.Todos.Remove(item));
+                return new Command<TodoItem>(async item => {
+                    await RemoveItem(item);
+                });
             }
         }
 
@@ -86,7 +92,23 @@ namespace Todo.Models
             Todos.Clear();
             items.OrderBy(i => i.IsDone).ToList().ForEach(Todos.Add);
         }
-        
+
+        /// <summary>
+        /// Updates the todo item within the data repository
+        /// </summary>
+        private async Task UpdateDoneStatus(TodoItem item) 
+        {
+            await dataRepository.UpdateItem(item);
+        }
+
+        /// <summary>
+        /// Removes an item from the data repository
+        /// </summary>
+        private async Task RemoveItem(TodoItem item)
+        {
+            Todos.Remove(item);
+            await dataRepository.DeleteItem(item);
+        }
     }
 }
     
