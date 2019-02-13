@@ -8,11 +8,28 @@ namespace Todo
 {
     public partial class App : Application
     {
+        public static IDataRepository DataRepository
+        {
+            get
+            {
+                if (dataRepository == null)
+                {
+                    lock (dataRepository)
+                    {
+                        if (dataRepository == null)
+                            dataRepository = new MemoryDataRepository();
+                    }
+                }
+
+                return dataRepository;
+            }
+        }
+
+        private static MemoryDataRepository dataRepository;
+
         public App()
         {
             InitializeComponent();
-
-            Current.Resources["Data"] = new TodoDataRepository();
 
             MainPage = new NavigationPage(new MainPage());
         }

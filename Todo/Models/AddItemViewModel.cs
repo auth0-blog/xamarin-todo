@@ -7,14 +7,14 @@ namespace Todo.Models
 {
     public class AddItemViewModel : ObservableModel
     {
-        private TodoDataRepository appRepository;
+        private readonly IDataRepository dataRepository;
         private string todoText;
 
         public event EventHandler ItemAdded;
 
-        /**
-         * Adds a new item
-         */
+        /// <summary>
+        /// Handles the command for adding a new item to the collection
+        /// </summary>
         public ICommand AddCommand
         {
             get
@@ -22,23 +22,29 @@ namespace Todo.Models
                 return new Command(() =>
                 {
                     if (!string.IsNullOrWhiteSpace(this.TodoText))
-                    {
-                        appRepository.Items.Add(new TodoItem { Title = this.TodoText });
+                    {                        
+                        dataRepository.AddItem(new TodoItem { Title = TodoText });
                         ItemAdded?.Invoke(this, new EventArgs());
                     }
                 });
             }
         }
 
+        /// <summary>
+        /// Holds the text for the new Todo item
+        /// </summary>
         public string TodoText
         {
-            get { return this.todoText; }
-            set { this.todoText = value; NotifyPropertyChanged("TodoText"); }
+            get { return todoText; }
+            set { todoText = value; NotifyPropertyChanged("TodoText"); }
         }
 
-        public AddItemViewModel()
+        /// <summary>
+        /// Creates a new instance of AddItemViewModel
+        /// </summary>        
+        public AddItemViewModel(IDataRepository repository)
         {
-            appRepository = Application.Current.Resources["Data"] as TodoDataRepository;
+            dataRepository = repository;
         }
     }
 }

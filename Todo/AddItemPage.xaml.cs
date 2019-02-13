@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Todo.Models;
+using Todo.Repositories;
 using Xamarin.Forms;
 
 namespace Todo
@@ -11,14 +12,13 @@ namespace Todo
         {
             InitializeComponent();
 
-            var viewModel = new AddItemViewModel();
-            this.BindingContext = viewModel;
+            var viewModel = new AddItemViewModel(App.DataRepository);
+            BindingContext = viewModel;
 
             viewModel.ItemAdded += async (s, e) =>
             {
                 await Navigation.PopAsync();
             };
-
         }
 
         protected override void OnAppearing()

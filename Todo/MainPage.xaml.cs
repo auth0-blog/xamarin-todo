@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Todo.Models;
 using Xamarin.Forms;
 
@@ -15,7 +10,14 @@ namespace Todo
         {
             InitializeComponent();
 
-            this.BindingContext = new TasksViewModel();
+            BindingContext = new TasksViewModel(App.DataRepository);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await (this.BindingContext as TasksViewModel).Initialize();
         }
 
         async void AddMenuItem_Clicked(object sender, EventArgs e)
