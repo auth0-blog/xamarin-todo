@@ -13,6 +13,7 @@ namespace Todo.Models
     public class TasksViewModel : ObservableModel
     {
         private IDataRepository dataRepository;
+        private bool isRefreshing;
 
         /// <summary>
         /// Handles Tap events on the Todo items
@@ -41,6 +42,32 @@ namespace Todo.Models
         }
 
         /// <summary>
+        /// Refreshes the Todo data
+        /// </summary>
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    IsRefreshing = true;
+                    await LoadData();
+                    IsRefreshing = false;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Returns true if data is being loaded from the repository
+        /// </summary>
+        public bool IsRefreshing
+        {
+            get { return this.isRefreshing; }
+            set { this.isRefreshing = value; NotifyPropertyChanged("IsRefreshing"); }
+        }
+
+
+        /// <summary>
         /// The list of Todo items in an observable collection
         /// </summary>
         public ObservableCollection<TodoItem> Todos { get; private set; }
@@ -56,15 +83,23 @@ namespace Todo.Models
         /// <summary>
         /// Initializes the view model and its data
         /// </summary>        
-        public async Task Initialize()
+        public async Task LoadData()
         {
             ApplyData(await dataRepository.GetData());
         }
 
         /// <summary>
+        /// Updates the todo item within the data repository
+        /// </summary>
+        private async Task UpdateDoneStatus(TodoItem item)
+        {
+            await dataRepository.UpdateItem(item);
+        }
+
+        /// <summary>
         /// Applies the specified list of todo items to the observable collection, and notifies subscribers
         /// </summary>        
-        private void ApplyData(List<TodoItem> data)
+        private void ApplyData(IEnumerable<TodoItem> data)
         {
             Todos = new ObservableCollection<TodoItem>(data);
             NotifyPropertyChanged("Todos");

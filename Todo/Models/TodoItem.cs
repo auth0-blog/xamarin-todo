@@ -3,9 +3,11 @@ using System.ComponentModel;
 
 namespace Todo.Models
 {
-    public class TodoItem : ObservableModel
+    public class TodoItem : ObservableModel, ICloneable
     {
         bool isDone = false;
+
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
@@ -19,6 +21,10 @@ namespace Todo.Models
             }
         }
 
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 
 }

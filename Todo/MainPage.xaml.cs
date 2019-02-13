@@ -6,18 +6,23 @@ namespace Todo
 {
     public partial class MainPage : ContentPage
     {
+        protected TasksViewModel ViewModel
+        {
+            get { return this.BindingContext as TasksViewModel; }
+            set { this.BindingContext = value; }
+        }
+
         public MainPage()
         {
             InitializeComponent();
-
-            BindingContext = new TasksViewModel(App.DataRepository);
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            await (this.BindingContext as TasksViewModel).Initialize();
+            ViewModel = new TasksViewModel(App.DataRepository);
+            await ViewModel.LoadData();             
         }
 
         async void AddMenuItem_Clicked(object sender, EventArgs e)
@@ -27,7 +32,7 @@ namespace Todo
         
         void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ((TasksViewModel)this.BindingContext).TapCommand.Execute(e.Item);
+            ViewModel.TapCommand.Execute(e.Item);
         }
     }
 }

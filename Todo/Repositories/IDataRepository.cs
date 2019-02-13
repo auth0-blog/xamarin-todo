@@ -6,8 +6,9 @@ namespace Todo.Repositories
 {
     public interface IDataRepository
     {
-        Task<List<TodoItem>> AddItem(TodoItem item);
-        Task<List<TodoItem>> GetData();
-        Task<List<TodoItem>> RemoveItem(TodoItem item);
+        Task<IEnumerable<TodoItem>> AddItem(TodoItem item);
+        Task<IEnumerable<TodoItem>> GetData();
+        Task<IEnumerable<TodoItem>> RemoveItem(TodoItem item);
+        Task<IEnumerable<TodoItem>> UpdateItem(TodoItem item);
     }
 }
