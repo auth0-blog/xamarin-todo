@@ -33,7 +33,7 @@ namespace Todo.Repositories
         /// </summary>
         public Task<IEnumerable<TodoItem>> GetData()
         {
-            return Task.FromResult(items.Select(i => i.Clone() as TodoItem));
+            return Task.FromResult(items.Select(i => i.Clone() as TodoItem).OrderBy(i => i.IsDone).AsEnumerable());
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace Todo.Models
 {
-    public class TasksViewModel : ObservableModel
+    public class TodoListViewModel : ObservableModel
     {
         private IDataRepository dataRepository;
         private bool isRefreshing;
@@ -22,7 +22,10 @@ namespace Todo.Models
         {
             get
             {
-                return new Command<TodoItem>(item => item.IsDone = !item.IsDone);
+                return new Command<TodoItem>(async item =>
+                {                    
+                    await UpdateDoneStatus(item);
+                });
             }
         }
 
@@ -75,9 +78,9 @@ namespace Todo.Models
         /// <summary>
         /// Creates a new instance of TasksViewModel
         /// </summary>        
-        public TasksViewModel(IDataRepository repository)
+        public TodoListViewModel(IDataRepository repository)
         {
-            this.dataRepository = repository;
+            dataRepository = repository;
         }
 
         /// <summary>
@@ -93,6 +96,7 @@ namespace Todo.Models
         /// </summary>
         private async Task UpdateDoneStatus(TodoItem item)
         {
+            item.IsDone = !item.IsDone;
             await dataRepository.UpdateItem(item);
         }
 

@@ -6,9 +6,9 @@ namespace Todo
 {
     public partial class MainPage : ContentPage
     {
-        protected TasksViewModel ViewModel
+        protected TodoListViewModel ViewModel
         {
-            get { return this.BindingContext as TasksViewModel; }
+            get { return this.BindingContext as TodoListViewModel; }
             set { this.BindingContext = value; }
         }
 
@@ -21,7 +21,7 @@ namespace Todo
         {
             base.OnAppearing();
 
-            ViewModel = new TasksViewModel(App.DataRepository);
+            ViewModel = new TodoListViewModel(App.DataRepository);
             await ViewModel.LoadData();             
         }
 

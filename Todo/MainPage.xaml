@@ -43,7 +43,7 @@
             SeparatorVisibility="None"
             ItemTapped="Handle_ItemTapped"
             IsPullToRefreshEnabled="true"
-            RefreshCommand="{Binding Refresh}"
+            RefreshCommand="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing}"
             SelectionMode="None"
             RowHeight="50">

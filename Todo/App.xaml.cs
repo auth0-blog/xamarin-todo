@@ -8,13 +8,19 @@ namespace Todo
 {
     public partial class App : Application
     {
+        private static object lockObj = new object();
+        private static MemoryDataRepository dataRepository;
+
+        /// <summary>
+        /// Gets the data repository used by the whole app
+        /// </summary>
         public static IDataRepository DataRepository
         {
             get
             {
                 if (dataRepository == null)
                 {
-                    lock (dataRepository)
+                    lock (lockObj)
                     {
                         if (dataRepository == null)
                             dataRepository = new MemoryDataRepository();
@@ -24,8 +30,6 @@ namespace Todo
                 return dataRepository;
             }
         }
-
-        private static MemoryDataRepository dataRepository;
 
         public App()
         {
